@@ -6,12 +6,12 @@ import { getPlan } from '../utils/storage';
 import StepIndicator from '../components/StepIndicator';
 import WizardNav from '../components/WizardNav';
 import EmployeeInfoStep from '../components/steps/EmployeeInfoStep';
-import CurrentRoleStep from '../components/steps/CurrentRoleStep';
-import CareerGoalsStep from '../components/steps/CareerGoalsStep';
-import StrengthsStep from '../components/steps/StrengthsStep';
-import DevelopmentAreasStep from '../components/steps/DevelopmentAreasStep';
-import ActionPlanStep from '../components/steps/ActionPlanStep';
-import SupportNeededStep from '../components/steps/SupportNeededStep';
+import LookbackStep from '../components/steps/CurrentRoleStep';
+import JobDescriptionStep from '../components/steps/CareerGoalsStep';
+import SelfAssessmentStep from '../components/steps/StrengthsStep';
+import ValuesAlignmentStep from '../components/steps/DevelopmentAreasStep';
+import CapabilitiesStep from '../components/steps/ActionPlanStep';
+import VisionGoalsStep from '../components/steps/SupportNeededStep';
 import ReviewStep from '../components/steps/ReviewStep';
 
 export default function EmployeeWizard() {
@@ -73,17 +73,17 @@ export default function EmployeeWizard() {
       case 0:
         return <EmployeeInfoStep data={plan.employeeInfo} onChange={(d) => updateSection('employeeInfo', d)} />;
       case 1:
-        return <CurrentRoleStep data={plan.currentRole} onChange={(d) => updateSection('currentRole', d)} />;
+        return <LookbackStep data={plan.lookback} onChange={(d) => updateSection('lookback', d)} />;
       case 2:
-        return <CareerGoalsStep data={plan.careerGoals} onChange={(d) => updateSection('careerGoals', d)} />;
+        return <JobDescriptionStep data={plan.jobDescriptionReview} onChange={(d) => updateSection('jobDescriptionReview', d)} />;
       case 3:
-        return <StrengthsStep data={plan.strengths} onChange={(d) => updateSection('strengths', d)} />;
+        return <SelfAssessmentStep data={plan.selfAssessment} onChange={(d) => updateSection('selfAssessment', d)} />;
       case 4:
-        return <DevelopmentAreasStep data={plan.developmentAreas} onChange={(d) => updateSection('developmentAreas', d)} />;
+        return <ValuesAlignmentStep data={plan.valuesAlignment} onChange={(d) => updateSection('valuesAlignment', d)} />;
       case 5:
-        return <ActionPlanStep data={plan.actionItems} onChange={(d) => updateSection('actionItems', d)} />;
+        return <CapabilitiesStep data={plan.capabilities} onChange={(d) => updateSection('capabilities', d)} />;
       case 6:
-        return <SupportNeededStep data={plan.supportNeeded} onChange={(d) => updateSection('supportNeeded', d)} />;
+        return <VisionGoalsStep vision={plan.vision} goals={plan.goals} onVisionChange={(d) => updateSection('vision', d)} onGoalsChange={(d) => updateSection('goals', d)} />;
       case 7:
         return <ReviewStep plan={plan} />;
       default:
@@ -97,7 +97,7 @@ export default function EmployeeWizard() {
     <div className="page wizard-page">
       <header className="wizard-header">
         <button className="btn btn-link" onClick={() => navigate('/')}>Home</button>
-        <h1>Employee Development Plan</h1>
+        <h1>CACF Individual Development Plan</h1>
         {saved && <span className="save-indicator">Saved!</span>}
       </header>
       <StepIndicator steps={EMPLOYEE_STEPS} currentStep={step} />

@@ -515,6 +515,168 @@ p { color: var(--color-gray-600); }
   margin-bottom: 1rem;
 }
 
+/* === CACF-specific: Tip Boxes === */
+.tip-box {
+  background: #fef9e7;
+  border-left: 4px solid var(--color-warning);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.9375rem;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+}
+
+/* === Field Hints === */
+.field-hint {
+  font-size: 0.875rem;
+  color: var(--color-gray-500);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+/* === Form Row (side-by-side fields) === */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* === Hero subtitle === */
+.hero-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.role-icon {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-primary-light);
+  border-radius: 999px;
+  display: inline-block;
+}
+
+/* === Assessment Grid (side-by-side strengths/gaps) === */
+.assessment-category {
+  background: #fff;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.assessment-category h3 {
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+.assessment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* === Value Cards === */
+.value-card {
+  background: #fff;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+.value-card-header {
+  background: var(--color-gray-50);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+.value-card-header h3 {
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+.value-description,
+.capability-description {
+  font-size: 0.875rem;
+  color: var(--color-gray-500);
+  font-style: italic;
+  margin-bottom: 0;
+}
+.value-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+/* === Capability Cards === */
+.capability-card {
+  background: #fff;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+.capability-card-header {
+  background: var(--color-gray-50);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+.capability-card-header h3 {
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+.capability-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+/* === Goal Cards === */
+.goal-card {
+  background: #fff;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.goal-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.goals-heading {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* === Wide step content (for values/capabilities/goals) === */
+.step-content-wide {
+  max-width: 960px;
+}
+
+/* === Review sub sections === */
+.review-sub-section {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--color-gray-50);
+  border-radius: var(--radius);
+}
+.review-sub-section h4 {
+  margin-bottom: 0.5rem;
+  color: var(--color-gray-700);
+}
+.pre-wrap {
+  white-space: pre-wrap;
+}
+
 /* === Responsive === */
 @media (max-width: 640px) {
   .role-cards {
@@ -536,5 +698,13 @@ p { color: var(--color-gray-600); }
   }
   .wizard-nav {
     padding: 0.75rem 1rem;
+  }
+  .form-row,
+  .assessment-grid {
+    grid-template-columns: 1fr;
+  }
+  .value-grid,
+  .capability-grid {
+    grid-template-columns: 1fr;
   }
 }

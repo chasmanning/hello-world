@@ -1,42 +1,41 @@
-import { TextField, SelectField } from '../FormField';
-import { createActionItem, ACTION_CATEGORIES, ACTION_STATUSES } from '../../utils/idpTemplate';
+import { TextField } from '../FormField';
+import { CACF_CAPABILITIES } from '../../utils/idpTemplate';
 
-export default function ActionPlanStep({ data, onChange }) {
-  const updateItem = (index, field, value) => {
-    const updated = data.map((item, i) => (i === index ? { ...item, [field]: value } : item));
-    onChange(updated);
-  };
-
-  const addItem = () => {
-    onChange([...data, createActionItem()]);
-  };
-
-  const removeItem = (index) => {
-    if (data.length <= 1) return;
-    onChange(data.filter((_, i) => i !== index));
+// Repurposed as Section 4b: Capabilities
+export default function CapabilitiesStep({ data, onChange }) {
+  const updateCapability = (capKey, field, value) => {
+    onChange({
+      ...data,
+      [capKey]: { ...data[capKey], [field]: value },
+    });
   };
 
   return (
-    <div className="step-content">
-      <h2>Action Plan</h2>
-      <p className="step-description">Define specific development activities that will help you close skill gaps and reach your goals.</p>
-      {data.map((item, i) => (
-        <div key={item.id} className="action-item-card">
-          <div className="action-item-header">
-            <h3>Activity {i + 1}</h3>
-            {data.length > 1 && (
-              <button className="btn btn-danger btn-sm" onClick={() => removeItem(i)}>Remove</button>
-            )}
+    <div className="step-content step-content-wide">
+      <h2>Section 4: Capabilities</h2>
+      <p className="step-description">
+        These six capabilities describe the personal capacities we need to do equity-centered work.
+        They are developmental — you're not expected to have arrived, but you are expected to be on the journey.
+      </p>
+      <div className="tip-box">
+        <strong>Think about:</strong> Which of these capabilities feels most natural to you right now?
+        Which one makes you uncomfortable, and what might that discomfort be telling you?
+        Where has a colleague modeled one of these competencies in a way that taught you something?
+      </div>
+
+      {CACF_CAPABILITIES.map((cap) => (
+        <div key={cap.key} className="capability-card">
+          <div className="capability-card-header">
+            <h3>{cap.name}</h3>
+            <p className="capability-description">{cap.description}</p>
           </div>
-          <TextField label="Activity Description" value={item.activity} onChange={(v) => updateItem(i, 'activity', v)} placeholder="What will you do?" required />
-          <SelectField label="Category" value={item.category} onChange={(v) => updateItem(i, 'category', v)} options={ACTION_CATEGORIES} />
-          <TextField label="Target Date" value={item.targetDate} onChange={(v) => updateItem(i, 'targetDate', v)} placeholder="e.g., March 2026" />
-          <TextField label="Resources Needed" value={item.resources} onChange={(v) => updateItem(i, 'resources', v)} placeholder="Tools, budget, access, etc." />
-          <TextField label="Success Measure" value={item.successMeasure} onChange={(v) => updateItem(i, 'successMeasure', v)} placeholder="How will you know this is complete?" />
-          <SelectField label="Status" value={item.status} onChange={(v) => updateItem(i, 'status', v)} options={ACTION_STATUSES} />
+          <div className="capability-grid">
+            <TextField label="Reflection" value={data[cap.key].reflection} onChange={(v) => updateCapability(cap.key, 'reflection', v)} placeholder="How has this capability shown up in your work?" multiline />
+            <TextField label="What will you do next year?" value={data[cap.key].nextYear} onChange={(v) => updateCapability(cap.key, 'nextYear', v)} placeholder="Specific actions to develop this capability" multiline />
+            <TextField label="Support needed" value={data[cap.key].supportNeeded} onChange={(v) => updateCapability(cap.key, 'supportNeeded', v)} placeholder="What support do you need?" multiline />
+          </div>
         </div>
       ))}
-      <button className="btn btn-secondary add-action-btn" onClick={addItem}>+ Add Another Activity</button>
     </div>
   );
 }

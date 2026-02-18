@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useIdp } from '../context/IdpContext';
 import { getPlan } from '../utils/storage';
-import { MANAGER_STEPS, CHECK_IN_OPTIONS } from '../utils/idpTemplate';
-import { TextField, SelectField } from '../components/FormField';
+import { MANAGER_STEPS } from '../utils/idpTemplate';
+import { TextField } from '../components/FormField';
 import StepIndicator from '../components/StepIndicator';
 import WizardNav from '../components/WizardNav';
 import ReviewStep from '../components/steps/ReviewStep';
@@ -35,37 +35,21 @@ export default function ManagerReview() {
     }
   };
 
-  const updateReview = (field, value) => {
+  const updateAssessment = (field, value) => {
     setPlan((prev) => ({
       ...prev,
-      managerReview: { ...prev.managerReview, [field]: value },
+      managerAssessment: { ...prev.managerAssessment, [field]: value },
     }));
   };
 
   const handleApprove = () => {
-    const reviewed = {
-      ...plan,
-      status: 'approved',
-      managerReview: {
-        ...plan.managerReview,
-        approved: true,
-        reviewDate: new Date().toISOString(),
-      },
-    };
+    const reviewed = { ...plan, status: 'approved' };
     savePlan(reviewed);
     navigate('/', { state: { message: 'Plan approved!' } });
   };
 
   const handleRequestRevision = () => {
-    const reviewed = {
-      ...plan,
-      status: 'draft',
-      managerReview: {
-        ...plan.managerReview,
-        approved: false,
-        reviewDate: new Date().toISOString(),
-      },
-    };
+    const reviewed = { ...plan, status: 'draft' };
     savePlan(reviewed);
     navigate('/', { state: { message: 'Revision requested. Plan sent back to employee.' } });
   };
@@ -94,7 +78,7 @@ export default function ManagerReview() {
         return (
           <div className="step-content">
             <h2>Select a Plan to Review</h2>
-            <p className="step-description">Choose an employee's development plan to review and provide feedback.</p>
+            <p className="step-description">Choose an employee's development plan to review and provide your parallel assessment.</p>
             {reviewablePlans.length === 0 ? (
               <div className="empty-state">
                 <p>No plans available for review. Employees need to create and submit their plans first.</p>
@@ -126,48 +110,64 @@ export default function ManagerReview() {
         return plan ? <ReviewStep plan={plan} /> : null;
       case 2:
         return plan ? (
-          <div className="step-content">
-            <h2>Provide Feedback</h2>
-            <p className="step-description">Share your feedback and guidance to help the employee succeed in their development plan.</p>
-            <TextField
-              label="Overall Feedback"
-              value={plan.managerReview.overallFeedback}
-              onChange={(v) => updateReview('overallFeedback', v)}
-              placeholder="Share your thoughts on the employee's plan. What looks strong? What could be improved?"
-              multiline
-              required
-            />
-            <TextField
-              label="Additional Goals or Suggestions"
-              value={plan.managerReview.additionalGoals}
-              onChange={(v) => updateReview('additionalGoals', v)}
-              placeholder="Any additional development goals or activities you'd recommend?"
-              multiline
-            />
-            <SelectField
-              label="Check-In Frequency"
-              value={plan.managerReview.checkInFrequency}
-              onChange={(v) => updateReview('checkInFrequency', v)}
-              options={CHECK_IN_OPTIONS}
-            />
+          <div className="step-content step-content-wide">
+            <h2>Manager Assessment</h2>
+            <p className="step-description">
+              Complete this parallel review using the same performance framework. This is not a scoring exercise;
+              it's meant to surface where perceptions align and where they differ, so the IDP conversation can focus
+              on the areas that matter most.
+            </p>
+            <div className="tip-box">
+              <strong>Tip:</strong> Ground your observations in specific examples. Instead of "needs to improve communication,"
+              try "I've noticed updates on the XYZ project sometimes come after decisions have already been made —
+              earlier communication would help the team plan better." Specificity makes the feedback actionable.
+            </div>
+
+            <div className="assessment-category">
+              <h3>Knowledge</h3>
+              <div className="assessment-grid">
+                <TextField label="Observed Strengths" value={plan.managerAssessment.knowledgeStrengths} onChange={(v) => updateAssessment('knowledgeStrengths', v)} multiline />
+                <TextField label="Areas for Development" value={plan.managerAssessment.knowledgeDevelopment} onChange={(v) => updateAssessment('knowledgeDevelopment', v)} multiline />
+              </div>
+            </div>
+
+            <div className="assessment-category">
+              <h3>Delivery/Execution</h3>
+              <div className="assessment-grid">
+                <TextField label="Observed Strengths" value={plan.managerAssessment.deliveryStrengths} onChange={(v) => updateAssessment('deliveryStrengths', v)} multiline />
+                <TextField label="Areas for Development" value={plan.managerAssessment.deliveryDevelopment} onChange={(v) => updateAssessment('deliveryDevelopment', v)} multiline />
+              </div>
+            </div>
+
+            <div className="assessment-category">
+              <h3>Communication & Leadership</h3>
+              <div className="assessment-grid">
+                <TextField label="Observed Strengths" value={plan.managerAssessment.communicationStrengths} onChange={(v) => updateAssessment('communicationStrengths', v)} multiline />
+                <TextField label="Areas for Development" value={plan.managerAssessment.communicationDevelopment} onChange={(v) => updateAssessment('communicationDevelopment', v)} multiline />
+              </div>
+            </div>
           </div>
         ) : null;
       case 3:
         return plan ? (
           <div className="step-content">
             <h2>Finalize Review</h2>
-            <p className="step-description">Review your feedback and decide whether to approve the plan or request revisions.</p>
+            <p className="step-description">Review your assessment and decide whether to approve the plan or request revisions.</p>
             <div className="review-section">
-              <h3>Your Feedback</h3>
-              <p>{plan.managerReview.overallFeedback || 'No feedback provided'}</p>
-              {plan.managerReview.additionalGoals && (
-                <>
-                  <h3>Additional Suggestions</h3>
-                  <p>{plan.managerReview.additionalGoals}</p>
-                </>
-              )}
-              <h3>Check-In Frequency</h3>
-              <p>{CHECK_IN_OPTIONS.find((o) => o.value === plan.managerReview.checkInFrequency)?.label || 'Monthly'}</p>
+              <h3>Your Manager Assessment</h3>
+              {[
+                { title: 'Knowledge', s: plan.managerAssessment.knowledgeStrengths, d: plan.managerAssessment.knowledgeDevelopment },
+                { title: 'Delivery/Execution', s: plan.managerAssessment.deliveryStrengths, d: plan.managerAssessment.deliveryDevelopment },
+                { title: 'Communication', s: plan.managerAssessment.communicationStrengths, d: plan.managerAssessment.communicationDevelopment },
+              ].map(({ title, s, d }) => (
+                <div key={title} className="review-sub-section">
+                  <h4>{title}</h4>
+                  <dl>
+                    <dt>Strengths</dt><dd className="pre-wrap">{s || 'Not provided'}</dd>
+                    <dt>Development</dt><dd className="pre-wrap">{d || 'Not provided'}</dd>
+                  </dl>
+                </div>
+              ))}
             </div>
             <div className="finalize-actions">
               <button className="btn btn-success btn-lg" onClick={handleApprove}>
