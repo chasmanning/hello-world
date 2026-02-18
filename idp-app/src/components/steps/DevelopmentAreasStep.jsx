@@ -17,6 +17,11 @@ export default function ValuesAlignmentStep({ data, onChange }) {
         Connect your performance and work with CACF's values. For each value, reflect on how it showed up (or didn't)
         in your work this year. Use the three columns to move from reflection to evidence to action.
       </p>
+
+      <div className="reference-image-container">
+        <img src="/our-values.png" alt="CACF Our Values — Curiosity, Proximity, Truth, Repair, and Solidarity" className="reference-image" />
+      </div>
+
       <div className="tip-box">
         <strong>Tip:</strong> Be honest about misalignment. If a value feels aspirational rather than practiced, say so.
         Naming the gap is the first step toward closing it — and your manager will appreciate the candor.

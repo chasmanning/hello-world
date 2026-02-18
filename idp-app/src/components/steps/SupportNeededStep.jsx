@@ -25,6 +25,10 @@ export default function VisionGoalsStep({ vision, goals, onVisionChange, onGoals
         Translate your vision into clear, measurable steps for the year ahead. Set 2-4 goals with milestones,
         and outline the development activities and resources that will help you achieve them.
       </p>
+      <div className="reference-image-container">
+        <img src="/4-pillars-of-strategy.png" alt="CACF 4 Pillars of Strategy — Deep & Authentic Relationships, Catalytic Resources, Influential Leadership, and Strong Enterprise" className="reference-image" />
+      </div>
+
       <div className="tip-box">
         <strong>Tip:</strong> Dream first, edit later. Write your vision without filtering for realism. Then work backward
         to identify which parts are achievable this year and which are 3-year aspirations.

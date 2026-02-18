@@ -12,7 +12,7 @@ export default function Home() {
     <div className="page home-page">
       <div className="hero">
         <h1>2026 Individual Development Plan</h1>
-        <p className="hero-subtitle">Central Appalachian Community Foundation</p>
+        <p className="hero-subtitle">Charlottesville Area Community Foundation</p>
         <p>
           A collaborative process to support your growth while advancing CACF's mission.
           Reflect on the past year, align your vision with our values and competencies, set measurable goals,

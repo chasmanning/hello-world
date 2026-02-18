@@ -13,6 +13,18 @@ export default function SelfAssessmentStep({ data, onChange }) {
         Review the competency descriptors for your current role level. For each category, reflect on where you feel
         confident, where you're growing, and where you see gaps. Be specific — ground your assessment in examples from the past year.
       </p>
+
+      <div className="reference-pdf-container">
+        <h3>Performance Framework Reference</h3>
+        <p className="field-hint">
+          Use this framework to understand the expectations for your role level across Knowledge, Delivery/Execution,
+          and Communication & Leadership.
+        </p>
+        <object data="/performance-framework.pdf" type="application/pdf" className="reference-pdf">
+          <p>Your browser doesn't support embedded PDFs. <a href="/performance-framework.pdf" target="_blank" rel="noopener noreferrer">Download the Performance Framework</a></p>
+        </object>
+      </div>
+
       <div className="tip-box">
         <strong>How to approach your self-assessment:</strong> This isn't about being modest or inflating your performance.
         It's about building self-awareness. The most useful self-assessments are honest, specific, and forward-looking.
